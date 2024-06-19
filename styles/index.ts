@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { StyleSheet } from 'react-native'
 
 import { FONTS } from './fonts'
 import { SIZES } from './sizes'
 import { COLORS } from './colors'
 
-export function Styles<T extends StyleSheet.NamedStyles<T>>(
+export function Styles<
+  T extends StyleSheet.NamedStyles<T> | StyleSheet.NamedStyles<any>,
+>(
   fn: ({
     font, // fonts
     size, // sizes
@@ -13,9 +16,7 @@ export function Styles<T extends StyleSheet.NamedStyles<T>>(
     font: typeof FONTS
     size: typeof SIZES
     color: typeof COLORS
-  }) => T,
+  }) => T & StyleSheet.NamedStyles<any>,
 ) {
-  const styles = fn({ font: FONTS, size: SIZES, color: COLORS })
-
-  return styles
+  return fn({ font: FONTS, size: SIZES, color: COLORS })
 }

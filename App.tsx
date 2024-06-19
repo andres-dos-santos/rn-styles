@@ -7,7 +7,7 @@ import { InitialLoading } from './components/initial-loading'
 
 import { useFonts } from './hooks/use-fonts'
 
-import { Styles } from './styles/create'
+import { Styles } from './styles'
 
 export default function App() {
   const { fontsLoaded, onLayout } = useFonts()

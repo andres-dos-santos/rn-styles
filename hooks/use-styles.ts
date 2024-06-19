@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { StyleProp } from 'react-native'
+import { StyleProp, StyleSheet } from 'react-native'
 
 import { FONTS } from '../styles/fonts'
 

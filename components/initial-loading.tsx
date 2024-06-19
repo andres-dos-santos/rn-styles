@@ -1,6 +1,6 @@
 import { ActivityIndicator, View } from 'react-native'
 
-import { Styles } from '../styles/create'
+import { Styles } from '../styles'
 
 export function InitialLoading() {
   return (
