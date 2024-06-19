@@ -1,34 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable camelcase */
-import { useFonts, DMSans_500Medium } from '@expo-google-fonts/dm-sans'
 import { StatusBar } from 'expo-status-bar'
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
-import * as SplashScreen from 'expo-splash-screen'
-import { useCallback } from 'react'
+import { Text, View } from 'react-native'
 
-import { FONTS } from './styles/fonts'
-import { SIZES } from './styles/sizes'
-import { COLORS } from './styles/colors'
+import { InitialLoading } from './components/initial-loading'
 
-SplashScreen.preventAutoHideAsync()
+import { useFonts } from './hooks/use-fonts'
+
+import { Styles } from './styles/create'
 
 export default function App() {
-  const [fontsLoaded, fontError] = useFonts({
-    'sans-500': DMSans_500Medium,
-  })
-
-  const onLayout = useCallback(async () => {
-    if (fontsLoaded || fontError) {
-      await SplashScreen.hideAsync()
-    }
-  }, [fontsLoaded, fontError])
+  const { fontsLoaded, onLayout } = useFonts()
 
   if (!fontsLoaded) {
-    return (
-      <View>
-        <ActivityIndicator size={16} color="#1c1c1c" />
-      </View>
-    )
+    return <InitialLoading />
   }
 
   return (
@@ -39,29 +24,15 @@ export default function App() {
   )
 }
 
-function Styles<T extends StyleSheet.NamedStyles<T>>(
-  fn: ({
-    f, // fonts
-    s, // sizes
-    c, // colors
-  }: {
-    f: typeof FONTS
-    s: typeof SIZES
-    c: typeof COLORS
-  }) => T,
-) {
-  return fn({ f: FONTS, s: SIZES, c: COLORS })
-}
-
-const s = Styles(({ f, s, c }) => ({
+const s = Styles(({ font, size, color }) => ({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
   },
   title: {
-    fontFamily: f['sans-500'],
-    fontSize: s[4],
-    color: c.primary,
+    fontFamily: font['sans-500'],
+    fontSize: size[4],
+    color: color.primary,
   },
 }))
