@@ -23,7 +23,7 @@ export default function App() {
     }
   }, [fontsLoaded, fontError])
 
-  if (fontsLoaded) {
+  if (!fontsLoaded) {
     return (
       <View>
         <ActivityIndicator size={16} color="#1c1c1c" />
@@ -33,35 +33,35 @@ export default function App() {
 
   return (
     <View style={s.container} onLayout={onLayout}>
-      <Text style={{ fontFamily: FONTS['sans-500'] }}>
-        This is a new way to stylying using React.
-      </Text>
+      <Text style={s.title}>This is a new way to stylying using React.</Text>
       <StatusBar style="auto" />
     </View>
   )
 }
 
-function Styles(
+function Styles<T extends StyleSheet.NamedStyles<T>>(
   fn: ({
-    fonts,
-    sizes,
-    colors,
+    f, // fonts
+    s, // sizes
+    c, // colors
   }: {
-    fonts: typeof FONTS
-    sizes: typeof SIZES
-    colors: typeof COLORS
-  }) => StyleSheet.NamedStyles<any>,
+    f: typeof FONTS
+    s: typeof SIZES
+    c: typeof COLORS
+  }) => T,
 ) {
-  return fn({ fonts: FONTS, sizes: SIZES, colors: COLORS })
+  return fn({ f: FONTS, s: SIZES, c: COLORS })
 }
 
-const s = Styles(({ fonts, sizes, colors }) => ({
+const s = Styles(({ f, s, c }) => ({
   container: {
     alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
   },
   title: {
-    fontFamily: fonts['sans-500'],
-    fontSize: sizes.sm,
-    color: colors.primary,
+    fontFamily: f['sans-500'],
+    fontSize: s[4],
+    color: c.primary,
   },
 }))
